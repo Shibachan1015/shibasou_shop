@@ -1,0 +1,62 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: shibasou_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: shibasou_dev
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d shibasou_dev || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  app:
+    build:
+      context: .
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    user: "${UID:-1000}:${GID:-1000}"
+    container_name: shibasou_app
+    working_dir: /app
+    environment:
+      MIX_ENV: dev
+      PHX_SERVER: "true"
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: shibasou_dev
+      HOME: /app
+      MIX_HOME: /app/.mix
+      HEX_HOME: /app/.hex
+      REBAR_CACHE_DIR: /app/.cache/rebar3
+      NPM_CONFIG_CACHE: /app/.npm
+    volumes:
+      - .:/app
+      - build-cache:/app/_build
+      - deps-cache:/app/deps
+      - npm-cache:/app/.npm
+      - mix-cache:/app/.mix
+      - hex-cache:/app/.hex
+      - rebar-cache:/app/.cache/rebar3
+    ports:
+      - "4000:4000"
+    depends_on:
+      db:
+        condition: service_healthy
+    command: bash -lc " mkdir -p .mix/archives .hex .cache/rebar3 assets/node_modules && chown -R ${UID:-1000}:${GID:-1000} .mix .hex .cache/rebar3 assets/node_modules || true && mix phx.server "
+
+volumes:
+  db-data:
+  build-cache:
+  deps-cache:
+  npm-cache:
+  mix-cache:
+  hex-cache:
+  rebar-cache:
+
+

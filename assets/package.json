@@ -1,0 +1,14 @@
+{
+    "private": true,
+    "scripts": {
+        "deploy": "npm run build",
+        "build": "esbuild js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --minify",
+        "watch": "esbuild js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --watch"
+    },
+    "dependencies": {
+        "esbuild": "^0.21.0",
+        "tailwindcss": "^3.4.3",
+        "autoprefixer": "^10.4.17",
+        "postcss": "^8.4.31"
+    }
+}
