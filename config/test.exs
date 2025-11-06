@@ -25,7 +25,8 @@ config :shibasou_shop, :sql_sandbox, true
 # テスト時は HTTP サーバを起動しない
 config :shibasou_shop, ShibasouShopWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "test_secret_key_base_change_me",
+  # 64 bytes 以上のランダム値
+  secret_key_base: "V1Sx2z7q8rP0tU3wY6Z9bC2fE5H8J1L4N7Q0T3W6Z9c2f5i8l1o4r7u0x3A6D9G2J5M8P1S4V7Y0B3E6H9K2",
   server: false
 
 # ---- Logger ----

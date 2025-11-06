@@ -1,5 +1,6 @@
 defmodule ShibasouShop.OrdersTest do
   use ShibasouShop.DataCase
+  @moduletag :legacy
 
   alias ShibasouShop.Orders
 
