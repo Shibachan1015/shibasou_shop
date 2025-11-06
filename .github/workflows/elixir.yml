@@ -3,57 +3,85 @@ name: Elixir CI
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
-  ci:
+  test:
     runs-on: ubuntu-latest
 
-    # Postgres は tests で使う。lint/dialyzer には不要だが、単一ジョブでまとめます。
     services:
       db:
-        image: postgres:15-alpine
+        image: postgres:16-alpine
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        ports: ["5432:5432"]
+          POSTGRES_DB: shibasou_test
+        ports:
+          - 5432:5432
         options: >-
-          --health-cmd="pg_isready -U postgres"
+          --health-cmd="pg_isready -U postgres -d shibasou_test"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
 
     env:
       MIX_ENV: test
-      DATABASE_URL: ecto://postgres:postgres@localhost:5432/shibasou_shop_test
+      DB_HOST: localhost
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: shibasou_test
 
     steps:
-      - name: Check out
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Erlang/Elixir
-        uses: erlef/setup-beam@v1
+      - uses: erlef/setup-beam@v1
         with:
-          elixir-version: "1.17"
-          otp-version: "27"
+          elixir-version: '1.17.3'
+          otp-version: '27'
 
-      # ── Caches ────────────────────────────────────────────────────────────────
-      - name: Cache deps
-        uses: actions/cache@v4
-        with:
-          path: deps
-          key: deps-${{ runner.os }}-${{ hashFiles('**/mix.lock') }}
-
-      - name: Cache _build (test)
-        uses: actions/cache@v4
-        with:
-          path: _build
-          key: build-test-${{ runner.os }}-${{ hashFiles('**/mix.lock') }}
-
-      # Dialyzer PLT は ~/.mix と priv/plts のどちらかに作られます
-      - name: Cache Dialyzer PLTs
+      - name: Cache deps/_build/PLTs
         uses: actions/cache@v4
         with:
           path: |
+            deps
+            _build
             ~/.mix
+            ~/.hex
             priv/plts
-          key: plt-${{ runner.os }}-otp
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+
+      - name: Prepare Mix
+        run: mix local.hex --force && mix local.rebar --force
+
+      - name: Deps
+        run: mix deps.get
+
+      - name: Prepare DB (test)
+        run: mix ecto.create --quiet && mix ecto.migrate --quiet
+
+      - name: Compile (warnings as errors)
+        run: mix compile --warnings-as-errors
+
+      - name: Format
+        run: mix format --check-formatted
+
+      - name: Credo
+        run: mix credo --strict
+
+      - name: Dialyzer PLT (build or reuse)
+        run: |
+          mkdir -p priv/plts
+          mix dialyzer --plt
+
+      - name: Dialyzer (analyze)
+        run: mix dialyzer --no-check
+
+      - name: Security - Sobelow (fail on MED+)
+        run: mix sobelow --exit --threshold Medium
+
+      - name: Security - Deps audit
+        run: mix deps.audit
+
+      - name: Test
+        run: mix test
