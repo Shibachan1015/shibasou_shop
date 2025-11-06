@@ -1,3 +1,4 @@
+# lib/shibasou_shop_web/router.ex
 defmodule ShibasouShopWeb.Router do
   use ShibasouShopWeb, :router
 
@@ -33,6 +34,11 @@ defmodule ShibasouShopWeb.Router do
     # you can use Plug.BasicAuth to set up some basic authentication
     # as long as you are also using SSL (which you should anyway).
     import Phoenix.LiveDashboard.Router
+
+    scope "/admin", ShibasouShopWeb do
+      pipe_through :browser
+      live "/products/:id", Admin.ProductLive.Show, :show
+    end
 
     scope "/dev" do
       pipe_through :browser

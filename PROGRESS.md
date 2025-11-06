@@ -21,7 +21,7 @@
 ### M0 — Project Setup & Quality Gate
 - [　] Create branch `feat/catalog-phase1`
 - [　] Add GitHub Actions CI (format/credo/dialyzer/sobelow/test)
-- [ ] Add dev tooling deps to `mix.exs` (credo/dialyxir/sobelow/mix_audit)
+- [　] Add dev tooling deps to `mix.exs` (credo/dialyxir/sobelow/mix_audit)
 - [ ] CI green on a blank run (no tests yet)
 - **DoD**: CI pipeline runs on PR and blocks merges when failing.
 

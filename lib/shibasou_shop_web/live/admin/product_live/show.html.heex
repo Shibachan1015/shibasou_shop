@@ -1,0 +1,31 @@
+~H"""
+<div class="space-y-6 p-6">
+  <h1 class="text-2xl font-bold"><%= @product.title %> (<%= @product.slug %>)</h1>
+
+  <div class="flex gap-3">
+    <.button phx-click="gen_variants">Generate variants</.button>
+  </div>
+
+  <div>
+    <h2 class="text-xl font-semibold mt-4 mb-2">Variants</h2>
+    <table class="table-auto border-collapse text-sm">
+      <thead>
+        <tr>
+          <th class="px-2 py-1 border">SKU</th>
+          <th class="px-2 py-1 border">Size</th>
+          <th class="px-2 py-1 border">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for v <- @variants do %>
+          <tr>
+            <td class="px-2 py-1 border"><%= v.sku %></td>
+            <td class="px-2 py-1 border"><%= Map.get(v.option_values || %{}, "Size") %></td>
+            <td class="px-2 py-1 border"><%= v.status %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+"""
