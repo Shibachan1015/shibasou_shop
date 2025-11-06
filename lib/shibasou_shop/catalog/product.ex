@@ -16,6 +16,7 @@ defmodule ShibasouShop.Catalog.Product do
     has_many :media_assets, ShibasouShop.Catalog.MediaAsset
 
     has_many :collection_products, ShibasouShop.Catalog.CollectionProduct
+
     many_to_many :collections, ShibasouShop.Catalog.Collection,
       join_through: ShibasouShop.Catalog.CollectionProduct,
       join_keys: [product_id: :id, collection_id: :id]
@@ -27,7 +28,7 @@ defmodule ShibasouShop.Catalog.Product do
     product
     |> cast(attrs, [:title, :slug, :description, :status, :tags, :seo, :attributes])
     |> validate_required([:title, :slug, :status])
-    |> validate_inclusion(:status, ["draft","active","archived"])
+    |> validate_inclusion(:status, ["draft", "active", "archived"])
     |> unique_constraint(:slug)
   end
 end

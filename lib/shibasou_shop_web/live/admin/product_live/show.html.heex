@@ -1,6 +1,6 @@
 ~H"""
 <div class="space-y-6 p-6">
-  <h1 class="text-2xl font-bold"><%= @product.title %> (<%= @product.slug %>)</h1>
+  <h1 class="text-2xl font-bold">{@product.title} ({@product.slug})</h1>
 
   <div class="flex gap-3">
     <.button phx-click="gen_variants">Generate variants</.button>
@@ -19,9 +19,9 @@
       <tbody>
         <%= for v <- @variants do %>
           <tr>
-            <td class="px-2 py-1 border"><%= v.sku %></td>
-            <td class="px-2 py-1 border"><%= Map.get(v.option_values || %{}, "Size") %></td>
-            <td class="px-2 py-1 border"><%= v.status %></td>
+            <td class="px-2 py-1 border">{v.sku}</td>
+            <td class="px-2 py-1 border">{Map.get(v.option_values || %{}, "Size")}</td>
+            <td class="px-2 py-1 border">{v.status}</td>
           </tr>
         <% end %>
       </tbody>

@@ -14,6 +14,7 @@ defmodule ShibasouShop.Catalog.CollectionProduct do
     |> cast(attrs, [:collection_id, :product_id, :position])
     |> validate_required([:collection_id, :product_id])
     |> unique_constraint([:collection_id, :product_id],
-         name: :collection_products_collection_id_product_id_index)
+      name: :collection_products_collection_id_product_id_index
+    )
   end
 end

@@ -16,7 +16,6 @@ defmodule ShibasouShop.MixProject do
     ]
   end
 
-
   def application do
     [
       mod: {ShibasouShop.Application, []},
@@ -32,10 +31,8 @@ defmodule ShibasouShop.MixProject do
     ]
   end
 
-
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
-
 
   defp deps do
     [
@@ -54,7 +51,9 @@ defmodule ShibasouShop.MixProject do
        github: "tailwindlabs/heroicons",
        tag: "v2.2.0",
        sparse: "optimized",
-       app: false, compile: false, depth: 1},
+       app: false,
+       compile: false,
+       depth: 1},
       {:swoosh, "~> 1.16"},
       {:req, "~> 0.5"},
       {:telemetry_metrics, "~> 1.0"},
@@ -74,7 +73,6 @@ defmodule ShibasouShop.MixProject do
       {:yaml_elixir, "~> 2.11", only: [:dev, :test], runtime: false, override: true}
     ]
   end
-
 
   defp aliases do
     [

@@ -16,6 +16,7 @@ defmodule ShibasouShop.BOM.VariantComponent do
     |> validate_required([:variant_id, :component_id, :qty])
     |> validate_number(:qty, greater_than: 0)
     |> unique_constraint([:variant_id, :component_id],
-         name: :variant_components_variant_id_component_id_index)
+      name: :variant_components_variant_id_component_id_index
+    )
   end
 end

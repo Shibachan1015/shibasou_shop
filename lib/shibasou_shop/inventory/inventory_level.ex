@@ -19,6 +19,7 @@ defmodule ShibasouShop.Inventory.InventoryLevel do
     |> validate_number(:qty_on_hand, greater_than_or_equal_to: 0)
     |> validate_number(:qty_reserved, greater_than_or_equal_to: 0)
     |> unique_constraint([:variant_id, :location_id],
-         name: :inventory_levels_variant_id_location_id_index)
+      name: :inventory_levels_variant_id_location_id_index
+    )
   end
 end

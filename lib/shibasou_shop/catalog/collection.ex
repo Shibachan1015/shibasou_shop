@@ -5,10 +5,12 @@ defmodule ShibasouShop.Catalog.Collection do
   schema "collections" do
     field :name, :string
     field :handle, :string
-    field :type, :string        # "manual" | "auto"
+    # "manual" | "auto"
+    field :type, :string
     field :rules, :map, default: %{}
 
     has_many :collection_products, ShibasouShop.Catalog.CollectionProduct
+
     many_to_many :products, ShibasouShop.Catalog.Product,
       join_through: ShibasouShop.Catalog.CollectionProduct,
       join_keys: [collection_id: :id, product_id: :id]

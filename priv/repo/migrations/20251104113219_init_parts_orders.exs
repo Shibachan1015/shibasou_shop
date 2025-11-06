@@ -6,19 +6,25 @@ defmodule ShibasouShop.Repo.Migrations.InitPartsOrders do
     # 1) パーツ3種：天 / 底材 / 鼻緒
     #
     create table(:tens) do
-      add :code, :string, null: false                     # 管理コード（SKU相当）
+      # 管理コード（SKU相当）
+      add :code, :string, null: false
       add :name, :string, null: false
-      add :price_delta_cents, :integer, null: false, default: 0  # 価格差額（ベース価格に加算）
+      # 価格差額（ベース価格に加算）
+      add :price_delta_cents, :integer, null: false, default: 0
       add :stock_qty, :integer, null: false, default: 0
       add :allocated_qty, :integer, null: false, default: 0
       add :backordered_qty, :integer, null: false, default: 0
-      add :image_layer_url, :string                        # レイヤー画像のURL（クライアント合成用）
+      # レイヤー画像のURL（クライアント合成用）
+      add :image_layer_url, :string
       add :enabled, :boolean, null: false, default: true
       timestamps()
     end
 
     create unique_index(:tens, [:code])
-    create constraint(:tens, :tens_stock_nonnegative, check: "stock_qty >= 0 AND allocated_qty >= 0 AND backordered_qty >= 0")
+
+    create constraint(:tens, :tens_stock_nonnegative,
+             check: "stock_qty >= 0 AND allocated_qty >= 0 AND backordered_qty >= 0"
+           )
 
     create table(:outsoles) do
       add :code, :string, null: false
@@ -33,7 +39,10 @@ defmodule ShibasouShop.Repo.Migrations.InitPartsOrders do
     end
 
     create unique_index(:outsoles, [:code])
-    create constraint(:outsoles, :outsoles_stock_nonnegative, check: "stock_qty >= 0 AND allocated_qty >= 0 AND backordered_qty >= 0")
+
+    create constraint(:outsoles, :outsoles_stock_nonnegative,
+             check: "stock_qty >= 0 AND allocated_qty >= 0 AND backordered_qty >= 0"
+           )
 
     create table(:hanaos) do
       add :code, :string, null: false
@@ -48,7 +57,10 @@ defmodule ShibasouShop.Repo.Migrations.InitPartsOrders do
     end
 
     create unique_index(:hanaos, [:code])
-    create constraint(:hanaos, :hanaos_stock_nonnegative, check: "stock_qty >= 0 AND allocated_qty >= 0 AND backordered_qty >= 0")
+
+    create constraint(:hanaos, :hanaos_stock_nonnegative,
+             check: "stock_qty >= 0 AND allocated_qty >= 0 AND backordered_qty >= 0"
+           )
 
     #
     # 2) 互換制約（どの天 x 鼻緒／底材が組めるか）
@@ -83,8 +95,10 @@ defmodule ShibasouShop.Repo.Migrations.InitPartsOrders do
       add :total_cents, :integer, null: false, default: 0
 
       # B2B請求関連（将来の締め処理で使用）
-      add :claim_cycle, :string                 # 例: "月末締め"
-      add :payment_terms, :string               # 例: "翌月末"
+      # 例: "月末締め"
+      add :claim_cycle, :string
+      # 例: "翌月末"
+      add :payment_terms, :string
       add :note, :text
 
       timestamps()
@@ -92,7 +106,11 @@ defmodule ShibasouShop.Repo.Migrations.InitPartsOrders do
 
     create unique_index(:orders, [:order_number])
     create constraint(:orders, :orders_customer_kind_chk, check: "customer_kind IN ('b2c','b2b')")
-    create constraint(:orders, :orders_status_chk, check: "status IN ('pending','allocated','partially_allocated','backordered','cancelled')")
+
+    create constraint(:orders, :orders_status_chk,
+             check:
+               "status IN ('pending','allocated','partially_allocated','backordered','cancelled')"
+           )
 
     create table(:order_items) do
       add :order_id, references(:orders, on_delete: :delete_all), null: false
@@ -112,7 +130,10 @@ defmodule ShibasouShop.Repo.Migrations.InitPartsOrders do
 
     create index(:order_items, [:order_id])
     create constraint(:order_items, :order_items_qty_positive, check: "qty > 0")
-    create constraint(:order_items, :order_items_alloc_nonneg, check: "allocated_qty >= 0 AND backordered_qty >= 0")
+
+    create constraint(:order_items, :order_items_alloc_nonneg,
+             check: "allocated_qty >= 0 AND backordered_qty >= 0"
+           )
 
     #
     # 4) 在庫台帳（仕入れ・調整・引当・出荷・返品などの履歴）
@@ -121,10 +142,13 @@ defmodule ShibasouShop.Repo.Migrations.InitPartsOrders do
     #
     create table(:inventory_ledgers) do
       add :part_type, :string, null: false
-      add :part_id, :bigint, null: false        # 参照先は part_type で分岐
-      add :change_qty, :integer, null: false    # +入庫 / -出庫
+      # 参照先は part_type で分岐
+      add :part_id, :bigint, null: false
+      # +入庫 / -出庫
+      add :change_qty, :integer, null: false
       add :reason, :string, null: false
-      add :order_id, references(:orders)        # 受注とのひもづけ（任意）
+      # 受注とのひもづけ（任意）
+      add :order_id, references(:orders)
       add :note, :text
       timestamps(updated_at: false)
     end
@@ -132,7 +156,12 @@ defmodule ShibasouShop.Repo.Migrations.InitPartsOrders do
     create index(:inventory_ledgers, [:order_id])
     create index(:inventory_ledgers, [:part_type, :part_id])
 
-    create constraint(:inventory_ledgers, :ledgers_part_type_chk, check: "part_type IN ('ten','outsole','hanao')")
-    create constraint(:inventory_ledgers, :ledgers_reason_chk, check: "reason IN ('purchase','adjust','allocate','release','ship','return')")
+    create constraint(:inventory_ledgers, :ledgers_part_type_chk,
+             check: "part_type IN ('ten','outsole','hanao')"
+           )
+
+    create constraint(:inventory_ledgers, :ledgers_reason_chk,
+             check: "reason IN ('purchase','adjust','allocate','release','ship','return')"
+           )
   end
 end

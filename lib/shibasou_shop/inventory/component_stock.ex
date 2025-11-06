@@ -17,6 +17,7 @@ defmodule ShibasouShop.Inventory.ComponentStock do
     |> validate_number(:qty_on_hand, greater_than_or_equal_to: 0)
     |> validate_number(:qty_reserved, greater_than_or_equal_to: 0)
     |> unique_constraint([:component_id, :location_id],
-         name: :component_stocks_component_id_location_id_index)
+      name: :component_stocks_component_id_location_id_index
+    )
   end
 end

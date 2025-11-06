@@ -9,7 +9,18 @@ defmodule ShibasouShop.OrdersTest do
 
     import ShibasouShop.OrdersFixtures
 
-    @invalid_attrs %{status: nil, order_number: nil, customer_kind: nil, allow_backorder: nil, subtotal_cents: nil, tax_cents: nil, total_cents: nil, claim_cycle: nil, payment_terms: nil, note: nil}
+    @invalid_attrs %{
+      status: nil,
+      order_number: nil,
+      customer_kind: nil,
+      allow_backorder: nil,
+      subtotal_cents: nil,
+      tax_cents: nil,
+      total_cents: nil,
+      claim_cycle: nil,
+      payment_terms: nil,
+      note: nil
+    }
 
     test "list_orders/0 returns all orders" do
       order = order_fixture()
@@ -22,7 +33,18 @@ defmodule ShibasouShop.OrdersTest do
     end
 
     test "create_order/1 with valid data creates a order" do
-      valid_attrs = %{status: "some status", order_number: "some order_number", customer_kind: "some customer_kind", allow_backorder: true, subtotal_cents: 42, tax_cents: 42, total_cents: 42, claim_cycle: "some claim_cycle", payment_terms: "some payment_terms", note: "some note"}
+      valid_attrs = %{
+        status: "some status",
+        order_number: "some order_number",
+        customer_kind: "some customer_kind",
+        allow_backorder: true,
+        subtotal_cents: 42,
+        tax_cents: 42,
+        total_cents: 42,
+        claim_cycle: "some claim_cycle",
+        payment_terms: "some payment_terms",
+        note: "some note"
+      }
 
       assert {:ok, %Order{} = order} = Orders.create_order(valid_attrs)
       assert order.status == "some status"
@@ -43,7 +65,19 @@ defmodule ShibasouShop.OrdersTest do
 
     test "update_order/2 with valid data updates the order" do
       order = order_fixture()
-      update_attrs = %{status: "some updated status", order_number: "some updated order_number", customer_kind: "some updated customer_kind", allow_backorder: false, subtotal_cents: 43, tax_cents: 43, total_cents: 43, claim_cycle: "some updated claim_cycle", payment_terms: "some updated payment_terms", note: "some updated note"}
+
+      update_attrs = %{
+        status: "some updated status",
+        order_number: "some updated order_number",
+        customer_kind: "some updated customer_kind",
+        allow_backorder: false,
+        subtotal_cents: 43,
+        tax_cents: 43,
+        total_cents: 43,
+        claim_cycle: "some updated claim_cycle",
+        payment_terms: "some updated payment_terms",
+        note: "some updated note"
+      }
 
       assert {:ok, %Order{} = order} = Orders.update_order(order, update_attrs)
       assert order.status == "some updated status"
