@@ -18,7 +18,7 @@ defmodule ShibasouShop.Repo.Migrations.Phase1Core do
       add :slug, :string, null: false
       add :description, :text
       add :status, :string, null: false, default: "draft" # draft | active | archived
-      add :tags, :text
+      add :tags, {:array, :string}
       add :seo, :map
       add :attributes, :map
       add :inventory_mode, :string, null: false, default: "preassembled" # assemble_on_order | preassembled
