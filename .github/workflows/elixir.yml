@@ -36,10 +36,24 @@ jobs:
 
       - uses: erlef/setup-beam@v1
         with:
-          elixir-version: '1.17.3'
-          otp-version: '27'
+          elixir-version: "1.17"
+          otp-version: "27"
 
-      - name: Cache deps/_build/PLTs
+      # ── Caches ────────────────────────────────────────────────────────────────
+      - name: Cache deps
+        uses: actions/cache@v4
+        with:
+          path: deps
+          key: deps-${{ runner.os }}-${{ hashFiles('**/mix.lock') }}
+
+      - name: Cache _build (test)
+        uses: actions/cache@v4
+        with:
+          path: _build
+          key: build-test-${{ runner.os }}-${{ hashFiles('**/mix.lock') }}
+
+      # Dialyzer PLT は ~/.mix と priv/plts のどちらかに作られます
+      - name: Cache Dialyzer PLTs
         uses: actions/cache@v4
         with:
           path: |

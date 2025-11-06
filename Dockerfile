@@ -1,5 +1,5 @@
 # 安定して存在する公式 Elixir イメージ
-FROM elixir:1.17-slim
+FROM elixir:1.18-slim
 
 # 必要ツール（Node.js と psql クライアントを含む）
 RUN apt-get update && apt-get install -y --no-install-recommends \
