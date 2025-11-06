@@ -1,73 +1,37 @@
+# config/test.exs
 import Config
 
-# Configure your database
-#
-# The MIX_TEST_PARTITION environment variable can be used
-# to provide built-in test partitioning in CI environment.
-# Run `mix help test` for more information.
+# ---- Repo (test) ----
+# CI でもローカルでも同一の環境変数で動くように。
+# 既定値は CI の Postgres サービスに合わせています。
 config :shibasou_shop, ShibasouShop.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "shibasou_shop_test#{System.get_env("MIX_TEST_PARTITION")}",
+  username: System.get_env("DB_USER", "postgres"),
+  password: System.get_env("DB_PASS", "postgres"),
+  hostname: System.get_env("DB_HOST", "localhost"),
+  port: String.to_integer(System.get_env("DB_PORT", "5432")),
+  # 並列実行時に MIX_TEST_PARTITION を付与できるようにしておく
+  database:
+    System.get_env("DB_NAME", "shibasou_test") <>
+      System.get_env("MIX_TEST_PARTITION", ""),
   pool: Ecto.Adapters.SQL.Sandbox,
-  pool_size: System.schedulers_online() * 2
+  pool_size: String.to_integer(System.get_env("DB_POOL_SIZE", "10")),
+  ssl: System.get_env("DB_SSL", "false") == "true",
+  parameters: [timezone: "utc"]
 
-# We don't run a server during test. If one is required,
-# you can enable the server option below.
+# Ecto SQL Sandbox を有効化（必要に応じて test_helper.exs 側でも設定）
+config :shibasou_shop, :sql_sandbox, true
+
+# ---- Endpoint ----
+# テスト時は HTTP サーバを起動しない
 config :shibasou_shop, ShibasouShopWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "WawzCrlI65zFwgr+xp40yn/FpNYsS1sekvur6rrMoYKhtH9yzRAxRWLhEyNSmC/S",
+  secret_key_base: "test_secret_key_base_change_me",
   server: false
 
-# In test we don't send emails
-config :shibasou_shop, ShibasouShop.Mailer, adapter: Swoosh.Adapters.Test
-
-# Disable swoosh api client as it is only required for production adapters
-config :swoosh, :api_client, false
-
-# Print only warnings and errors during test
+# ---- Logger ----
 config :logger, level: :warning
-
-# Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
 
-# Enable helpful, but potentially expensive runtime checks
-config :phoenix_live_view,
-  enable_expensive_runtime_checks: true
-
-# Configure your database
-#
-# The MIX_TEST_PARTITION environment variable can be used
-# to provide built-in test partitioning in CI environment.
-# Run `mix help test` for more information.
-config :shibasou_shop, ShibasouShop.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "shibasou_shop_test#{System.get_env("MIX_TEST_PARTITION")}",
-  pool: Ecto.Adapters.SQL.Sandbox,
-  pool_size: System.schedulers_online() * 2
-
-# We don't run a server during test. If one is required,
-# you can enable the server option below.
-config :shibasou_shop, ShibasouShopWeb.Endpoint,
-  http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "RyE4haHEPYLnOe/I7jBt17I3gkmIjZHg3yGptbaqBtl7U3LSiuKfFO+v0j605l3U",
-  server: false
-
-# In test we don't send emails
-config :shibasou_shop, ShibasouShop.Mailer, adapter: Swoosh.Adapters.Test
-
-# Disable swoosh api client as it is only required for production adapters
+# ---- Mailer ----
+# テストで外部HTTPクライアントを使わない
 config :swoosh, :api_client, false
-
-# Print only warnings and errors during test
-config :logger, level: :warning
-
-# Initialize plugs at runtime for faster test compilation
-config :phoenix, :plug_init_mode, :runtime
-
-# Enable helpful, but potentially expensive runtime checks
-config :phoenix_live_view,
-  enable_expensive_runtime_checks: true
