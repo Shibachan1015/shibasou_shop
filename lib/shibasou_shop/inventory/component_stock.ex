@@ -3,6 +3,18 @@ defmodule ShibasouShop.Inventory.ComponentStock do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @type t :: %__MODULE__{
+          id: integer() | nil,
+          qty_on_hand: integer(),
+          qty_reserved: integer(),
+          component_id: integer() | nil,
+          location_id: integer() | nil,
+          component: Ecto.Schema.t() | Ecto.Association.NotLoaded.t(),
+          location: Ecto.Schema.t() | Ecto.Association.NotLoaded.t(),
+          inserted_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
+        }
+
   schema "component_stocks" do
     field :qty_on_hand, :integer, default: 0
     field :qty_reserved, :integer, default: 0

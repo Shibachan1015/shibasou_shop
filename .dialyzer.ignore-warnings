@@ -1,0 +1,6 @@
+# Ignore ExUnit macro-related warnings in test files
+Function ExUnit.Callbacks.__merge__/4 does not exist.
+Function ExUnit.Callbacks.__noop__/0 does not exist.
+Function ExUnit.Callbacks.on_exit/1 does not exist.
+Function ExUnit.CaseTemplate.__proxy__/2 does not exist.
+

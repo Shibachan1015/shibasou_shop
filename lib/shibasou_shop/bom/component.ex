@@ -3,6 +3,17 @@ defmodule ShibasouShop.BOM.Component do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @type t :: %__MODULE__{
+          id: integer() | nil,
+          code: String.t() | nil,
+          kind: String.t() | nil,
+          size: String.t() | nil,
+          attributes: map(),
+          component_stocks: Ecto.Association.NotLoaded.t() | [ShibasouShop.Inventory.ComponentStock.t()],
+          inserted_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
+        }
+
   schema "components" do
     field :code, :string
     # "hanao" | "ten" | "sole"

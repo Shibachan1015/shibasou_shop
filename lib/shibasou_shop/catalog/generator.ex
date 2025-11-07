@@ -14,7 +14,7 @@ defmodule ShibasouShop.Catalog.Generator do
   - Assigns SKU via template `{PROD}-{SIZE}`
   """
   @spec generate_size_variants(product_id :: integer) ::
-          {:ok, [Variant.t()]} | {:error, term}
+          {:ok, {:ok, [Variant.t()]}} | {:error, term}
   def generate_size_variants(product_id) when is_integer(product_id) do
     Repo.transaction(fn ->
       product = Repo.get!(Product, product_id)

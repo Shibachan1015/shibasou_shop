@@ -3,6 +3,15 @@ defmodule ShibasouShop.BOM.VariantComponent do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @type t :: %__MODULE__{
+          qty: integer(),
+          size_map: map(),
+          variant_id: integer() | nil,
+          component_id: integer() | nil,
+          variant: Ecto.Schema.t() | Ecto.Association.NotLoaded.t(),
+          component: Ecto.Schema.t() | Ecto.Association.NotLoaded.t()
+        }
+
   @primary_key false
   schema "variant_components" do
     field :qty, :integer, default: 1

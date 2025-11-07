@@ -31,9 +31,6 @@ defmodule ShibasouShopWeb.Admin.ProductLive.Show do
 
       {:error, reason} ->
         {:noreply, put_flash(socket, :error, "Failed: #{inspect(reason)}")}
-
-      other ->
-        {:noreply, put_flash(socket, :error, "Unexpected: #{inspect(other)}")}
     end
   end
 end

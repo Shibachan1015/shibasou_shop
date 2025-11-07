@@ -12,7 +12,11 @@ defmodule ShibasouShop.MixProject do
       aliases: aliases(),
       deps: deps(),
       compilers: [:phoenix_live_view] ++ Mix.compilers(),
-      listeners: [Phoenix.CodeReloader]
+      listeners: [Phoenix.CodeReloader],
+      dialyzer: [
+        ignore_warnings: ".dialyzer.ignore-warnings",
+        plt_add_apps: [:ex_unit]
+      ]
     ]
   end
 

@@ -3,6 +3,24 @@ defmodule ShibasouShop.Catalog.Variant do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @type t :: %__MODULE__{
+          id: integer() | nil,
+          sku: String.t() | nil,
+          price_cents: integer(),
+          compare_at_cents: integer() | nil,
+          tax_included: boolean(),
+          option_values: map(),
+          weight_g: integer(),
+          status: String.t(),
+          product_id: integer() | nil,
+          product: Ecto.Schema.t() | Ecto.Association.NotLoaded.t(),
+          variant_components: Ecto.Association.NotLoaded.t() | [ShibasouShop.BOM.VariantComponent.t()],
+          components: Ecto.Association.NotLoaded.t() | [ShibasouShop.BOM.Component.t()],
+          inventory_levels: Ecto.Association.NotLoaded.t() | [ShibasouShop.Inventory.InventoryLevel.t()],
+          inserted_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
+        }
+
   schema "variants" do
     field :sku, :string
     field :price_cents, :integer, default: 0
