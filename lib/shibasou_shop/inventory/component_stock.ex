@@ -1,4 +1,5 @@
 defmodule ShibasouShop.Inventory.ComponentStock do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 

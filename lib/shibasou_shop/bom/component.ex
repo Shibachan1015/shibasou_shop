@@ -1,4 +1,5 @@
 defmodule ShibasouShop.BOM.Component do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 

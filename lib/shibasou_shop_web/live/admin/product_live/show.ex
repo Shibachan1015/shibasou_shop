@@ -1,7 +1,7 @@
 defmodule ShibasouShopWeb.Admin.ProductLive.Show do
   use ShibasouShopWeb, :live_view
+  alias ShibasouShop.Catalog.{Generator, Product}
   alias ShibasouShop.Repo
-  alias ShibasouShop.Catalog.{Product, Generator}
 
   @impl true
   def mount(%{"id" => id}, _session, socket) do

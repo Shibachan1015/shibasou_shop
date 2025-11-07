@@ -3,9 +3,9 @@ defmodule ShibasouShop.Catalog.Generator do
   Variant auto-generation from Option/OptionValues (Size only for MVP).
   """
   import Ecto.Query, warn: false
-  alias ShibasouShop.Repo
-  alias ShibasouShop.Catalog.{Product, Option, OptionValue, Variant}
+  alias ShibasouShop.Catalog.{Option, OptionValue, Product, Variant}
   alias ShibasouShop.Catalog.SKU
+  alias ShibasouShop.Repo
 
   @doc """
   Generate size variants for a product from its `Size` option.

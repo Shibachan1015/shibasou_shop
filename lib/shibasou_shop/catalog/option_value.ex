@@ -1,4 +1,5 @@
 defmodule ShibasouShop.Catalog.OptionValue do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 

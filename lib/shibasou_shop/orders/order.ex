@@ -1,4 +1,5 @@
 defmodule ShibasouShop.Orders.Order do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 

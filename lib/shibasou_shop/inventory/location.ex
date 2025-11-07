@@ -1,4 +1,5 @@
 defmodule ShibasouShop.Inventory.Location do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 
