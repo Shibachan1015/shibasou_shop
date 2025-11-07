@@ -9,7 +9,8 @@ defmodule ShibasouShop.BOM.Component do
           kind: String.t() | nil,
           size: String.t() | nil,
           attributes: map(),
-          component_stocks: Ecto.Association.NotLoaded.t() | [ShibasouShop.Inventory.ComponentStock.t()],
+          component_stocks:
+            Ecto.Association.NotLoaded.t() | [ShibasouShop.Inventory.ComponentStock.t()],
           inserted_at: DateTime.t() | nil,
           updated_at: DateTime.t() | nil
         }

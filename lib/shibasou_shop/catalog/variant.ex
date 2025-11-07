@@ -14,9 +14,11 @@ defmodule ShibasouShop.Catalog.Variant do
           status: String.t(),
           product_id: integer() | nil,
           product: Ecto.Schema.t() | Ecto.Association.NotLoaded.t(),
-          variant_components: Ecto.Association.NotLoaded.t() | [ShibasouShop.BOM.VariantComponent.t()],
+          variant_components:
+            Ecto.Association.NotLoaded.t() | [ShibasouShop.BOM.VariantComponent.t()],
           components: Ecto.Association.NotLoaded.t() | [ShibasouShop.BOM.Component.t()],
-          inventory_levels: Ecto.Association.NotLoaded.t() | [ShibasouShop.Inventory.InventoryLevel.t()],
+          inventory_levels:
+            Ecto.Association.NotLoaded.t() | [ShibasouShop.Inventory.InventoryLevel.t()],
           inserted_at: DateTime.t() | nil,
           updated_at: DateTime.t() | nil
         }
