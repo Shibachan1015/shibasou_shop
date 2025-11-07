@@ -82,12 +82,18 @@ jobs:
 
       - name: Credo
         run: |
+          set +e
           mix credo --strict
           credo_exit=$?
+          set -e
           if [ $credo_exit -eq 2 ]; then
             echo "Credo found only design suggestions (exit code 2), continuing..."
             exit 0
+          elif [ $credo_exit -eq 0 ]; then
+            echo "Credo passed with no issues"
+            exit 0
           else
+            echo "Credo failed with exit code $credo_exit"
             exit $credo_exit
           fi
 
