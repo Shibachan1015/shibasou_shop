@@ -244,3 +244,88 @@ git commit -m "feat(<機能名>): integrate A+B"
 3. **自動レビュー**: Verifier が客観的なレビューを提供
 4. **統合最適化**: 両方の強みを活かした最終案を作成
 
+
+
+
+
+
+memo
+実際の使い方を説明します。まず、プロジェクトの状態を確認します。
+
+
+[2 tools called]
+
+
+作成したスクリプトをコミットしてから、使用例を示します。
+
+
+[2 tools called]
+
+
+使い方の例です。
+
+## 実際の使い方
+
+### ステップ1: 機能を決める
+
+例: 「ユーザー認証機能」を実装する場合
+
+```bash
+# 機能名を決める（例: user-authentication）
+FEATURE_NAME="user-authentication"
+```
+
+### ステップ2: ブランチ/Worktreeをセットアップ
+
+```bash
+# Worktreeを使う場合（推奨：並列作業がしやすい）
+./scripts/agent-flow/setup-worktrees.sh user-authentication
+
+# または、ブランチのみの場合
+./scripts/agent-flow/setup-branches.sh user-authentication
+```
+
+### ステップ3: Plannerで仕様を作成
+
+```bash
+# プロンプトを表示
+./scripts/agent-flow/show-prompt.sh planner user-authentication
+```
+
+表示されたプロンプトをコピーして、GPT-5 Codex High（Planner）に貼り付けます。
+
+### ステップ4: Builder AとBで並列実装
+
+**Builder A用プロンプト:**
+```bash
+./scripts/agent-flow/show-prompt.sh builder-a user-authentication
+```
+
+**Builder B用プロンプト:**
+```bash
+./scripts/agent-flow/show-prompt.sh builder-b user-authentication
+```
+
+それぞれのプロンプトを対応するエージェント（composer1-1、composer1-2）に貼り付けます。
+
+### ステップ5: Verifierでレビュー
+
+```bash
+./scripts/agent-flow/show-prompt.sh verifier user-authentication
+```
+
+### ステップ6: 統合
+
+```bash
+./scripts/agent-flow/integrate.sh user-authentication
+```
+
+---
+
+## 今すぐ試す場合
+
+1. 実装したい機能を決める
+2. セットアップスクリプトを実行
+3. 各エージェントにプロンプトを貼り付けて作業
+
+試したい機能があれば教えてください。セットアップから案内します。
