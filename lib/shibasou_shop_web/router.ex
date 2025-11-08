@@ -9,6 +9,15 @@ defmodule ShibasouShopWeb.Router do
     plug :put_root_layout, html: {ShibasouShopWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :put_content_security_policy
+  end
+
+  defp put_content_security_policy(conn, _opts) do
+    csp_policy =
+      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' ws: wss:; frame-ancestors 'self';"
+
+    conn
+    |> put_resp_header("content-security-policy", csp_policy)
   end
 
   pipeline :api do
