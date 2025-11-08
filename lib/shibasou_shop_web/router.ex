@@ -21,13 +21,8 @@ defmodule ShibasouShopWeb.Router do
     plug :fetch_live_flash
     plug :put_root_layout, html: {ShibasouShopWeb.Layouts, :root}
     plug :protect_from_forgery
-<<<<<<< Current (Your changes)
-    plug :put_secure_browser_headers
-    plug ShibasouShopWeb.Plugs.ContentSecurityPolicy
-=======
     plug :put_secure_browser_headers,
       %{"content-security-policy" => @browser_csp}
->>>>>>> Incoming (Background Agent changes)
   end
 
   pipeline :api do
