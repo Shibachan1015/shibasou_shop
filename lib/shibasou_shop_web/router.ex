@@ -1,14 +1,33 @@
 defmodule ShibasouShopWeb.Router do
   use ShibasouShopWeb, :router
 
+  @browser_csp [
+                 "default-src 'self'",
+                 "connect-src 'self' https: wss: ws:",
+                 "img-src 'self' data:",
+                 "script-src 'self'",
+                 "style-src 'self' 'unsafe-inline'",
+                 "font-src 'self'",
+                 "frame-ancestors 'self'",
+                 "form-action 'self'",
+                 "base-uri 'self'",
+                 "object-src 'none'"
+               ]
+               |> Enum.join("; ")
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
     plug :put_root_layout, html: {ShibasouShopWeb.Layouts, :root}
     plug :protect_from_forgery
+<<<<<<< Current (Your changes)
     plug :put_secure_browser_headers
     plug ShibasouShopWeb.Plugs.ContentSecurityPolicy
+=======
+    plug :put_secure_browser_headers,
+      %{"content-security-policy" => @browser_csp}
+>>>>>>> Incoming (Background Agent changes)
   end
 
   pipeline :api do
