@@ -53,7 +53,11 @@ jobs:
         run: mix compile --warnings-as-errors
 
       - name: Check formatting
-        run: mix format --check-formatted
+        run: |
+          mix format --check-formatted || (
+            echo "::error ::mix format --check-formatted が失敗しました。ローカルで 'mix format' を実行してから push してください。"
+            exit 1
+          )
 
       - name: Security scan
         run: mix sobelow --exit --threshold Medium

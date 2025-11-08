@@ -21,9 +21,8 @@ defmodule ShibasouShopWeb.Router do
     plug :fetch_live_flash
     plug :put_root_layout, html: {ShibasouShopWeb.Layouts, :root}
     plug :protect_from_forgery
-
     plug :put_secure_browser_headers,
-         %{"content-security-policy" => @browser_csp}
+      %{"content-security-policy" => @browser_csp}
   end
 
   pipeline :api do

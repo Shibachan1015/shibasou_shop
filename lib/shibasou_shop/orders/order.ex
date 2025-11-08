@@ -20,29 +20,7 @@ defmodule ShibasouShop.Orders.Order do
   @doc false
   def changeset(order, attrs) do
     order
-    |> cast(attrs, [
-      :order_number,
-      :customer_kind,
-      :status,
-      :allow_backorder,
-      :subtotal_cents,
-      :tax_cents,
-      :total_cents,
-      :claim_cycle,
-      :payment_terms,
-      :note
-    ])
-    |> validate_required([
-      :order_number,
-      :customer_kind,
-      :status,
-      :allow_backorder,
-      :subtotal_cents,
-      :tax_cents,
-      :total_cents,
-      :claim_cycle,
-      :payment_terms,
-      :note
-    ])
+    |> cast(attrs, [:order_number, :customer_kind, :status, :allow_backorder, :subtotal_cents, :tax_cents, :total_cents, :claim_cycle, :payment_terms, :note])
+    |> validate_required([:order_number, :customer_kind, :status, :allow_backorder, :subtotal_cents, :tax_cents, :total_cents, :claim_cycle, :payment_terms, :note])
   end
 end
