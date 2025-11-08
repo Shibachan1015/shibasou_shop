@@ -8,6 +8,7 @@ defmodule ShibasouShopWeb.Router do
     plug :put_root_layout, html: {ShibasouShopWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug ShibasouShopWeb.Plugs.ContentSecurityPolicy
   end
 
   pipeline :api do
