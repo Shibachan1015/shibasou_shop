@@ -37,3 +37,6 @@ npm-debug.log
 
 .git
 .DS_Store
+
+# Sobelow configuration (deprecated, use config/sobelow.exs instead)
+.sobelow-conf
