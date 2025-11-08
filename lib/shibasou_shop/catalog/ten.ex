@@ -18,7 +18,25 @@ defmodule ShibasouShop.Catalog.Ten do
   @doc false
   def changeset(ten, attrs) do
     ten
-    |> cast(attrs, [:code, :name, :price_delta_cents, :stock_qty, :allocated_qty, :backordered_qty, :image_layer_url, :enabled])
-    |> validate_required([:code, :name, :price_delta_cents, :stock_qty, :allocated_qty, :backordered_qty, :image_layer_url, :enabled])
+    |> cast(attrs, [
+      :code,
+      :name,
+      :price_delta_cents,
+      :stock_qty,
+      :allocated_qty,
+      :backordered_qty,
+      :image_layer_url,
+      :enabled
+    ])
+    |> validate_required([
+      :code,
+      :name,
+      :price_delta_cents,
+      :stock_qty,
+      :allocated_qty,
+      :backordered_qty,
+      :image_layer_url,
+      :enabled
+    ])
   end
 end
