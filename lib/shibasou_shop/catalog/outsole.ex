@@ -1,4 +1,5 @@
 defmodule ShibasouShop.Catalog.Outsole do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -18,7 +19,25 @@ defmodule ShibasouShop.Catalog.Outsole do
   @doc false
   def changeset(outsole, attrs) do
     outsole
-    |> cast(attrs, [:code, :name, :price_delta_cents, :stock_qty, :allocated_qty, :backordered_qty, :image_layer_url, :enabled])
-    |> validate_required([:code, :name, :price_delta_cents, :stock_qty, :allocated_qty, :backordered_qty, :image_layer_url, :enabled])
+    |> cast(attrs, [
+      :code,
+      :name,
+      :price_delta_cents,
+      :stock_qty,
+      :allocated_qty,
+      :backordered_qty,
+      :image_layer_url,
+      :enabled
+    ])
+    |> validate_required([
+      :code,
+      :name,
+      :price_delta_cents,
+      :stock_qty,
+      :allocated_qty,
+      :backordered_qty,
+      :image_layer_url,
+      :enabled
+    ])
   end
 end

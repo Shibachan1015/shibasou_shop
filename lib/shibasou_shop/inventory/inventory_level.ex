@@ -1,0 +1,39 @@
+defmodule ShibasouShop.Inventory.InventoryLevel do
+  @moduledoc false
+  use Ecto.Schema
+  import Ecto.Changeset
+
+  @type t :: %__MODULE__{
+          id: integer() | nil,
+          qty_on_hand: integer(),
+          qty_reserved: integer(),
+          low_stock_threshold: integer() | nil,
+          variant_id: integer() | nil,
+          location_id: integer() | nil,
+          variant: Ecto.Schema.t() | Ecto.Association.NotLoaded.t(),
+          location: Ecto.Schema.t() | Ecto.Association.NotLoaded.t(),
+          inserted_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
+        }
+
+  schema "inventory_levels" do
+    field :qty_on_hand, :integer, default: 0
+    field :qty_reserved, :integer, default: 0
+    field :low_stock_threshold, :integer
+
+    belongs_to :variant, ShibasouShop.Catalog.Variant
+    belongs_to :location, ShibasouShop.Inventory.Location
+    timestamps()
+  end
+
+  def changeset(il, attrs) do
+    il
+    |> cast(attrs, [:variant_id, :location_id, :qty_on_hand, :qty_reserved, :low_stock_threshold])
+    |> validate_required([:variant_id, :location_id])
+    |> validate_number(:qty_on_hand, greater_than_or_equal_to: 0)
+    |> validate_number(:qty_reserved, greater_than_or_equal_to: 0)
+    |> unique_constraint([:variant_id, :location_id],
+      name: :inventory_levels_variant_id_location_id_index
+    )
+  end
+end

@@ -1,5 +1,6 @@
 defmodule ShibasouShop.CatalogTest do
   use ShibasouShop.DataCase
+  @moduletag :legacy
 
   alias ShibasouShop.Catalog
 
@@ -8,7 +9,16 @@ defmodule ShibasouShop.CatalogTest do
 
     import ShibasouShop.CatalogFixtures
 
-    @invalid_attrs %{code: nil, enabled: nil, name: nil, price_delta_cents: nil, stock_qty: nil, allocated_qty: nil, backordered_qty: nil, image_layer_url: nil}
+    @invalid_attrs %{
+      code: nil,
+      enabled: nil,
+      name: nil,
+      price_delta_cents: nil,
+      stock_qty: nil,
+      allocated_qty: nil,
+      backordered_qty: nil,
+      image_layer_url: nil
+    }
 
     test "list_tens/0 returns all tens" do
       ten = ten_fixture()
@@ -21,7 +31,16 @@ defmodule ShibasouShop.CatalogTest do
     end
 
     test "create_ten/1 with valid data creates a ten" do
-      valid_attrs = %{code: "some code", enabled: true, name: "some name", price_delta_cents: 42, stock_qty: 42, allocated_qty: 42, backordered_qty: 42, image_layer_url: "some image_layer_url"}
+      valid_attrs = %{
+        code: "some code",
+        enabled: true,
+        name: "some name",
+        price_delta_cents: 42,
+        stock_qty: 42,
+        allocated_qty: 42,
+        backordered_qty: 42,
+        image_layer_url: "some image_layer_url"
+      }
 
       assert {:ok, %Ten{} = ten} = Catalog.create_ten(valid_attrs)
       assert ten.code == "some code"
@@ -40,7 +59,17 @@ defmodule ShibasouShop.CatalogTest do
 
     test "update_ten/2 with valid data updates the ten" do
       ten = ten_fixture()
-      update_attrs = %{code: "some updated code", enabled: false, name: "some updated name", price_delta_cents: 43, stock_qty: 43, allocated_qty: 43, backordered_qty: 43, image_layer_url: "some updated image_layer_url"}
+
+      update_attrs = %{
+        code: "some updated code",
+        enabled: false,
+        name: "some updated name",
+        price_delta_cents: 43,
+        stock_qty: 43,
+        allocated_qty: 43,
+        backordered_qty: 43,
+        image_layer_url: "some updated image_layer_url"
+      }
 
       assert {:ok, %Ten{} = ten} = Catalog.update_ten(ten, update_attrs)
       assert ten.code == "some updated code"
@@ -76,7 +105,16 @@ defmodule ShibasouShop.CatalogTest do
 
     import ShibasouShop.CatalogFixtures
 
-    @invalid_attrs %{code: nil, enabled: nil, name: nil, price_delta_cents: nil, stock_qty: nil, allocated_qty: nil, backordered_qty: nil, image_layer_url: nil}
+    @invalid_attrs %{
+      code: nil,
+      enabled: nil,
+      name: nil,
+      price_delta_cents: nil,
+      stock_qty: nil,
+      allocated_qty: nil,
+      backordered_qty: nil,
+      image_layer_url: nil
+    }
 
     test "list_outsoles/0 returns all outsoles" do
       outsole = outsole_fixture()
@@ -89,7 +127,16 @@ defmodule ShibasouShop.CatalogTest do
     end
 
     test "create_outsole/1 with valid data creates a outsole" do
-      valid_attrs = %{code: "some code", enabled: true, name: "some name", price_delta_cents: 42, stock_qty: 42, allocated_qty: 42, backordered_qty: 42, image_layer_url: "some image_layer_url"}
+      valid_attrs = %{
+        code: "some code",
+        enabled: true,
+        name: "some name",
+        price_delta_cents: 42,
+        stock_qty: 42,
+        allocated_qty: 42,
+        backordered_qty: 42,
+        image_layer_url: "some image_layer_url"
+      }
 
       assert {:ok, %Outsole{} = outsole} = Catalog.create_outsole(valid_attrs)
       assert outsole.code == "some code"
@@ -108,7 +155,17 @@ defmodule ShibasouShop.CatalogTest do
 
     test "update_outsole/2 with valid data updates the outsole" do
       outsole = outsole_fixture()
-      update_attrs = %{code: "some updated code", enabled: false, name: "some updated name", price_delta_cents: 43, stock_qty: 43, allocated_qty: 43, backordered_qty: 43, image_layer_url: "some updated image_layer_url"}
+
+      update_attrs = %{
+        code: "some updated code",
+        enabled: false,
+        name: "some updated name",
+        price_delta_cents: 43,
+        stock_qty: 43,
+        allocated_qty: 43,
+        backordered_qty: 43,
+        image_layer_url: "some updated image_layer_url"
+      }
 
       assert {:ok, %Outsole{} = outsole} = Catalog.update_outsole(outsole, update_attrs)
       assert outsole.code == "some updated code"
@@ -144,7 +201,16 @@ defmodule ShibasouShop.CatalogTest do
 
     import ShibasouShop.CatalogFixtures
 
-    @invalid_attrs %{code: nil, enabled: nil, name: nil, price_delta_cents: nil, stock_qty: nil, allocated_qty: nil, backordered_qty: nil, image_layer_url: nil}
+    @invalid_attrs %{
+      code: nil,
+      enabled: nil,
+      name: nil,
+      price_delta_cents: nil,
+      stock_qty: nil,
+      allocated_qty: nil,
+      backordered_qty: nil,
+      image_layer_url: nil
+    }
 
     test "list_hanaos/0 returns all hanaos" do
       hanao = hanao_fixture()
@@ -157,7 +223,16 @@ defmodule ShibasouShop.CatalogTest do
     end
 
     test "create_hanao/1 with valid data creates a hanao" do
-      valid_attrs = %{code: "some code", enabled: true, name: "some name", price_delta_cents: 42, stock_qty: 42, allocated_qty: 42, backordered_qty: 42, image_layer_url: "some image_layer_url"}
+      valid_attrs = %{
+        code: "some code",
+        enabled: true,
+        name: "some name",
+        price_delta_cents: 42,
+        stock_qty: 42,
+        allocated_qty: 42,
+        backordered_qty: 42,
+        image_layer_url: "some image_layer_url"
+      }
 
       assert {:ok, %Hanao{} = hanao} = Catalog.create_hanao(valid_attrs)
       assert hanao.code == "some code"
@@ -176,7 +251,17 @@ defmodule ShibasouShop.CatalogTest do
 
     test "update_hanao/2 with valid data updates the hanao" do
       hanao = hanao_fixture()
-      update_attrs = %{code: "some updated code", enabled: false, name: "some updated name", price_delta_cents: 43, stock_qty: 43, allocated_qty: 43, backordered_qty: 43, image_layer_url: "some updated image_layer_url"}
+
+      update_attrs = %{
+        code: "some updated code",
+        enabled: false,
+        name: "some updated name",
+        price_delta_cents: 43,
+        stock_qty: 43,
+        allocated_qty: 43,
+        backordered_qty: 43,
+        image_layer_url: "some updated image_layer_url"
+      }
 
       assert {:ok, %Hanao{} = hanao} = Catalog.update_hanao(hanao, update_attrs)
       assert hanao.code == "some updated code"
